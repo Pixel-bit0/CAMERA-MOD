@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Unzip project
+        run: unzip -o webscreen-block-mod.zip -d project
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -15,9 +17,9 @@ jobs:
         with:
           gradle-version: 8.8
       - name: Build
-        run: gradle build --no-daemon
+        run: gradle -p project build --no-daemon
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
           name: webscreen-mod
-          path: build/libs/*.jar
+          path: project/build/libs/*.jar
